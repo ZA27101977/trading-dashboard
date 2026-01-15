@@ -1,0 +1,9 @@
+import streamlit as st
+
+st.set_page_config(page_title="Trading Dashboard", layout="wide")
+
+st.title("?? Trading Dashboard")
+
+st.success("הדשבורד רץ בהצלחה בענן!")
+
+st.write("אם אתה רואה את המסך הזה – ההעלאה הצליחה ??")
