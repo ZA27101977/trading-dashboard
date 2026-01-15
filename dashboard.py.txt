@@ -1,9 +1,27 @@
 import streamlit as st
+import pandas as pd
+from strategy.signal_engine import generate_signal
+from market.alpaca import get_market_data
+from config.settings import WATCHLIST
 
-st.set_page_config(page_title="Trading Dashboard", layout="wide")
+st.set_page_config(layout="wide", page_title="News Trading LIVE")
 
-st.title("?? Trading Dashboard")
+st.title("?? News-Based Trading Dashboard (LIVE)")
 
-st.success("הדשבורד רץ בהצלחה בענן!")
+data = []
 
-st.write("אם אתה רואה את המסך הזה – ההעלאה הצליחה ??")
+for stock in WATCHLIST:
+    signal = generate_signal(stock)
+    price, volume, ma20, avg_volume = get_market_data(stock)
+
+    data.append({
+        "Stock": stock,
+        "Price": round(price, 2),
+        "Volume": volume,
+        "MA20": round(ma20, 2),
+        "Signal": signal or "NONE"
+    })
+
+df = pd.DataFrame(data)
+
+st.dataframe(df, use_container_width=True)
